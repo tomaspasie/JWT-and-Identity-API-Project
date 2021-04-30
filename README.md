@@ -9,4 +9,12 @@
 
 # Screenshot - Roles of authenticated, staff, or admin code.
 ![RolesCode](/RolesCode.png "RolesCode")  
+
+# Screenshot - Postman: Unauthorized User.
+![Unauthorized](/Unauthorized.png "Unauthorized")  
+
+# Screenshot - Authorization Code.
+![AuthorizationCode](/AuthorizationCode.png "AuthorizationCode")  
  
+ # Screenshot - Postman: Successfully Created User
+![201Created](/201Created.png "201Created") 
