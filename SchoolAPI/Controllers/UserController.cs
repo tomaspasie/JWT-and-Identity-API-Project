@@ -40,7 +40,7 @@ namespace SchoolAPI.Controllers
             return Ok(userDto);
         }
 
-        [HttpGet("{id}", Name = "getUserById")]
+        [HttpGet("{id}", Name = "getUserById"), Authorize(Roles = "Authenticated")]
         //[ServiceFilter(typeof(ActionFilterExample))]
         public IActionResult Get(Guid id)
         {
@@ -60,7 +60,7 @@ namespace SchoolAPI.Controllers
         // Filtering Test: https://localhost:5001/api/v1/users/paging?MinAge=21&MaxAge=30
         // Searching Test: https://localhost:5001/api/v1/users/paging?name=tomas&MinAge=21&MaxAge=30
         // Sorting Test: https://localhost:5001/api/v1/users/paging?orderBy=name desc&MinAge=21&MaxAge=30
-        [HttpGet("paging",Name = "getPagingUsers")]
+        [HttpGet("paging",Name = "getPagingUsers"), Authorize(Roles = "Authenticated")]
         public IActionResult GetUsers([FromQuery] UserParameters userParameters)
         {
 
@@ -87,7 +87,7 @@ namespace SchoolAPI.Controllers
             return Ok(users);
         }
 
-        [HttpPost(Name = "createUser")]
+        [HttpPost(Name = "createUser"), Authorize(Roles = "Authenticated")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public IActionResult Create([FromBody] CreateItem item)
         {
@@ -112,7 +112,7 @@ namespace SchoolAPI.Controllers
             return CreatedAtRoute("getUserById", new { id = userToReturn.Id }, userToReturn);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id}"), Authorize(Roles = "Authenticated")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public IActionResult Update(Guid id, [FromBody] NameString str)
         {
@@ -139,7 +139,7 @@ namespace SchoolAPI.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}"), Authorize(Roles = "Authenticated")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public IActionResult Delete(Guid id)
         {
@@ -156,7 +156,7 @@ namespace SchoolAPI.Controllers
             return NoContent();
         }
 
-        [HttpPatch("{id}")]
+        [HttpPatch("{id}"), Authorize(Roles = "Authenticated")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public IActionResult Patch(Guid id, [FromBody] NameString str)
         {

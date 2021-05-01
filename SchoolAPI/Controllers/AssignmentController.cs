@@ -28,7 +28,7 @@ namespace SchoolAPI.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet(Name = "getAllAssignments"), Authorize(Roles = "Authenticated")]
+        [HttpGet(Name = "getAllAssignments"), Authorize(Roles = "Authenticated,Staff,Admin")]
         //[ServiceFilter(typeof(ActionFilterExample))]
         public override IActionResult Get()
         {
@@ -40,7 +40,7 @@ namespace SchoolAPI.Controllers
             return Ok(assignmentDto);
         }
 
-        [HttpGet("{id}", Name = "getAssignmentById")]
+        [HttpGet("{id}", Name = "getAssignmentById"), Authorize(Roles = "Authenticated,Staff,Admin")]
         //[ServiceFilter(typeof(ActionFilterExample))]
         public override IActionResult Get(Guid id)
         {
@@ -57,7 +57,7 @@ namespace SchoolAPI.Controllers
             }
         }
 
-        [HttpGet("paging", Name = "getPagingAssignments")]
+        [HttpGet("paging", Name = "getPagingAssignments"), Authorize(Roles = "Authenticated,Staff,Admin")]
         public IActionResult GetAssignments([FromQuery] AssignmentParameters assignmentParameters)
         {
             var assignments = _repository.Assignment.GetAssignments(assignmentParameters);
@@ -65,7 +65,7 @@ namespace SchoolAPI.Controllers
             return Ok(assignments);
         }
 
-        [HttpPost(Name = "createAssignment")]
+        [HttpPost(Name = "createAssignment"), Authorize(Roles = "Admin")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public override IActionResult Create([FromBody] CreateItem item)
         {
@@ -79,7 +79,7 @@ namespace SchoolAPI.Controllers
             return CreatedAtRoute("getAssignmentById", new { id = assignmentToReturn.Id }, assignmentToReturn);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id}"), Authorize(Roles = "Admin")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public override IActionResult Update(Guid id, [FromBody] NameString str)
         {
@@ -106,7 +106,7 @@ namespace SchoolAPI.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}"), Authorize(Roles = "Admin")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public override IActionResult Delete(Guid id)
         {
@@ -123,7 +123,7 @@ namespace SchoolAPI.Controllers
             return NoContent();
         }
 
-        [HttpPatch("{id}")]
+        [HttpPatch("{id}"), Authorize(Roles = "Admin")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public IActionResult Patch(Guid id, [FromBody] NameString str)
         {
