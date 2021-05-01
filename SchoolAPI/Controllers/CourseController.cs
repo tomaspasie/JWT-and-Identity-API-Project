@@ -6,6 +6,7 @@ using Entities.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json;
 using SchoolAPI.ActionFilters;
 
@@ -27,7 +28,7 @@ namespace SchoolAPI.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet(Name = "getAllCourses")]
+        [HttpGet(Name = "getAllCourses"), Authorize(Roles = "Authenticated")]
         //[ServiceFilter(typeof(ActionFilterExample))]
         public override IActionResult Get()
         {

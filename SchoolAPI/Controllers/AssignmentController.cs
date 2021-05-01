@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ActionFilters.Filters;
+using Microsoft.AspNetCore.Authorization;
 using SchoolAPI.ActionFilters;
 
 namespace SchoolAPI.Controllers
@@ -27,7 +28,7 @@ namespace SchoolAPI.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet(Name = "getAllAssignments")]
+        [HttpGet(Name = "getAllAssignments"), Authorize(Roles = "Authenticated")]
         //[ServiceFilter(typeof(ActionFilterExample))]
         public override IActionResult Get()
         {
@@ -134,6 +135,33 @@ namespace SchoolAPI.Controllers
             if (!ModelState.IsValid)
             {
                 _logger.LogError("Invalid model state for the AssignmentForUpdateDto object");
+                return UnprocessableEntity(ModelState);
+            }
+            var assignmentEntity = _repository.Assignment.GetAssignment(id, trackChanges: true);
+            if (assignmentEntity == null)
+            {
+                _logger.LogInfo($"Assignment with id: {id} doesn't exist in the database.");
+                return NotFound();
+            }
+
+            _mapper.Map(str, assignmentEntity);
+            _repository.Save();
+
+            return NoContent();
+        }
+
+        [HttpPut("EditScore/{id}"), Authorize(Roles = "Staff,Admin")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
+        public IActionResult EditScore(Guid id, [FromBody] NameString str)
+        {
+            if (str == null)
+            {
+                _logger.LogError("Assignment score sent from client is null.");
+                return BadRequest("Assignment score is null");
+            }
+            if (!ModelState.IsValid)
+            {
+                _logger.LogError("Invalid model state for the Assignment score");
                 return UnprocessableEntity(ModelState);
             }
             var assignmentEntity = _repository.Assignment.GetAssignment(id, trackChanges: true);

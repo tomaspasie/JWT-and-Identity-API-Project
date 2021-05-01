@@ -39,6 +39,9 @@ namespace SchoolAPI.Controllers
             var user = _mapper.Map<User>(userForRegistration);
             var result = await _userManager.CreateAsync(user, userForRegistration.Password);
 
+            // User should be assigned the role of authenticated user when they are created by default. 
+            userForRegistration.Roles.Add("Authenticated");
+
             if (!result.Succeeded)
             {
                 foreach (var error in result.Errors)

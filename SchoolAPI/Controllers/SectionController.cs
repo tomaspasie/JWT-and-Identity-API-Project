@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using SchoolAPI.ActionFilters;
 
 namespace SchoolAPI.Controllers
@@ -26,7 +27,7 @@ namespace SchoolAPI.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet(Name = "getAllSections")]
+        [HttpGet(Name = "getAllSections"), Authorize(Roles = "Authenticated")]
         public override IActionResult Get()
         {
             var sections = _repository.Section.GetAllSections(trackChanges: false);
