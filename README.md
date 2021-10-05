@@ -1,11 +1,6 @@
-###### Tomas Pasiecznik
-###### Professor Williams
-###### IS 421-002
-###### 30 April 2021
+# JWT and Identity API Project
 
-# Homework: Module 15 - JWT and Identity
-
-### Assignment: Implement user authentication for your API and implement role-based authorization. User should be assigned the role of authenticated user when they are created by default. You will need to create an endpoint to assign a role of authenticated, staff, or admin to your user model. You will need to add an endpoint for a user to view a section assignment they add, so they can view their score. You will need to add an additional endpoint for editing the score of a section assignment, since only a staff or admin can edit the score. Refer to the following permission matrix for the user authorization per role.  
+### Goal: Implement user authentication for the API and implement role-based authorization. User should be assigned the role of authenticated user when they are created by default. You will need to create an endpoint to assign a role of authenticated, staff, or admin to your user model. You will need to add an endpoint for a user to view a section assignment they add, so they can view their score. You will need to add an additional endpoint for editing the score of a section assignment, since only a staff or admin can edit the score. Refer to the following permission matrix for the user authorization per role.  
 
 # Screenshot - User is assigned the "Authenticated" by default.  
 ![DefaultAuthenticated](/DefaultAuthenticated.png "DefaultAuthenticated")  
